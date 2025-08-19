@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Rescue Tool - Fix Failing Ads in 60 Seconds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Campaign Rescue Tool</h1>
+            <p class="text-xl mb-6 opacity-90">Failing ad campaign? Get 5 specific fixes in under 60 seconds</p>
+            <div class="bg-red-500 text-white px-4 py-2 rounded-full inline-block font-semibold">
+                🚨 Stop Burning Money Now
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Tool -->
+    <div class="max-w-4xl mx-auto px-6 -mt-8">
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <!-- Step Indicator -->
+            <div class="flex justify-center mb-8">
+                <div class="flex items-center space-x-4">
+                    <div id="step1-indicator" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                    <div class="w-12 h-1 bg-gray-300" id="progress-bar-1"></div>
+                    <div id="step2-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-semibold">2</div>
+                    <div class="w-12 h-1 bg-gray-300" id="progress-bar-2"></div>
+                    <div id="step3-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-semibold">3</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Campaign Details -->
+            <div id="step1" class="space-y-6">
+                <h2 class="text-2xl font-bold text-center mb-8">Tell Us About Your Failing Campaign</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Campaign Type</label>
+                        <select id="campaignType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select campaign type</option>
+                            <option value="facebook">Facebook/Meta Ads</option>
+                            <option value="google">Google Ads</option>
+                            <option value="instagram">Instagram Ads</option>
+                            <option value="linkedin">LinkedIn Ads</option>
+                            <option value="tiktok">TikTok Ads</option>
+                            <option value="youtube">YouTube Ads</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Campaign Goal</label>
+                        <select id="campaignGoal" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select primary goal</option>
+                            <option value="leads">Generate Leads</option>
+                            <option value="sales">Drive Sales</option>
+                            <option value="traffic">Increase Website Traffic</option>
+                            <option value="awareness">Brand Awareness</option>
+                            <option value="engagement">Social Engagement</option>
+                            <option value="app">App Downloads</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Daily Budget</label>
+                        <select id="dailyBudget" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select budget range</option>
+                            <option value="low">$10 - $50/day</option>
+                            <option value="medium">$51 - $200/day</option>
+                            <option value="high">$201 - $500/day</option>
+                            <option value="enterprise">$500+/day</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Campaign Duration</label>
+                        <select id="campaignDuration" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">How long has it been running?</option>
+                            <option value="new">1-3 days</option>
+                            <option value="week">1 week</option>
+                            <option value="month">2-4 weeks</option>
+                            <option value="long">1+ months</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="goToStep2()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors pulse-animation">
+                    Continue to Performance Metrics →
+                </button>
+            </div>
+
+            <!-- Step 2: Performance Issues -->
+            <div id="step2" class="space-y-6 hidden">
+                <h2 class="text-2xl font-bold text-center mb-8">What's Going Wrong?</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Click-Through Rate (CTR)</label>
+                        <select id="ctrIssue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">How's your CTR?</option>
+                            <option value="very-low">Very Low (under 0.5%)</option>
+                            <option value="low">Low (0.5% - 1%)</option>
+                            <option value="average">Average (1% - 2%)</option>
+                            <option value="good">Good (2%+)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Conversion Rate</label>
+                        <select id="conversionIssue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">How are conversions?</option>
+                            <option value="none">No conversions</option>
+                            <option value="very-low">Very few (under 1%)</option>
+                            <option value="low">Low (1% - 3%)</option>
+                            <option value="average">Average (3%+)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Cost Per Result</label>
+                        <select id="costIssue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">How's your cost efficiency?</option>
+                            <option value="too-high">Way too high</option>
+                            <option value="high">Higher than expected</option>
+                            <option value="acceptable">Acceptable</option>
+                            <option value="good">Good value</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Audience Response</label>
+                        <select id="audienceIssue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">How's audience engagement?</option>
+                            <option value="negative">Negative comments/feedback</option>
+                            <option value="low">Low engagement</option>
+                            <option value="mixed">Mixed reactions</option>
+                            <option value="positive">Positive engagement</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4">
+                    <button onclick="goToStep1()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-4 px-6 rounded-lg transition-colors">
+                        ← Back
+                    </button>
+                    <button onclick="generateRescuePlan()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors pulse-animation">
+                        🚨 Generate Rescue Plan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Rescue Plan -->
+            <div id="step3" class="space-y-6 hidden">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-red-600 mb-2">🚨 CAMPAIGN RESCUE PLAN</h2>
+                    <p class="text-gray-600">Implement these 5 fixes immediately to stop the bleeding</p>
+                </div>
+
+                <div id="rescuePlan" class="space-y-4">
+                    <!-- Rescue recommendations will be inserted here -->
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
+                    <h3 class="font-semibold text-yellow-800 mb-2">⚡ Quick Implementation Tips:</h3>
+                    <ul class="text-yellow-700 space-y-1 text-sm">
+                        <li>• Implement fixes one at a time to measure impact</li>
+                        <li>• Give each change 24-48 hours to show results</li>
+                        <li>• Keep your best-performing elements unchanged</li>
+                        <li>• Document what you change for future reference</li>
+                    </ul>
+                </div>
+
+                <!-- Premium Upgrade Section -->
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-6 mb-6">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-purple-800 mb-2">🚀 Upgrade to Premium Rescue Plan</h3>
+                        <p class="text-purple-600 mb-4">Get the complete implementation guide + bonus materials</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-6 text-left">
+                            <div class="bg-white p-4 rounded-lg">
+                                <h4 class="font-semibold text-gray-800 mb-2">✅ What You Get:</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Step-by-step implementation timeline</li>
+                                    <li>• Platform-specific screenshots & guides</li>
+                                    <li>• 30-day email follow-up sequence</li>
+                                    <li>• Competitor analysis template</li>
+                                    <li>• Advanced targeting strategies</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg">
+                                <h4 class="font-semibold text-gray-800 mb-2">💰 Value Breakdown:</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Implementation Guide: $97</li>
+                                    <li>• Email Templates: $47</li>
+                                    <li>• Competitor Analysis: $67</li>
+                                    <li>• Targeting Strategies: $97</li>
+                                    <li class="font-semibold text-green-600">Total Value: $308</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <span class="text-2xl font-bold text-purple-800">Only $47</span>
+                                <span class="text-gray-500 line-through ml-2">$308</span>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-sm ml-2">85% OFF</span>
+                            </div>
+                            <button onclick="upgradeToPremium()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg transition-colors pulse-animation text-lg">
+                                🚀 Get Premium Rescue Plan - $47
+                            </button>
+                            <p class="text-xs text-gray-500 mt-2">Secure payment via Stripe • 30-day money-back guarantee</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center space-y-4">
+                    <button onclick="downloadPlan()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors">
+                        📥 Download Free Basic Plan
+                    </button>
+                    <button onclick="startOver()" class="block mx-auto text-blue-600 hover:text-blue-800 font-medium">
+                        Analyze Another Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Proposition -->
+        <div class="mt-12 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Why Marketers Love This Tool</h3>
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">⚡</div>
+                        <h4 class="font-semibold mb-2">60-Second Analysis</h4>
+                        <p class="text-gray-600 text-sm">Get actionable fixes faster than your morning coffee</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">💰</div>
+                        <h4 class="font-semibold mb-2">Stop Money Bleeding</h4>
+                        <p class="text-gray-600 text-sm">Average user saves $2,847/month in wasted ad spend</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <h4 class="font-semibold mb-2">Platform-Specific</h4>
+                        <p class="text-gray-600 text-sm">Tailored advice for Facebook, Google, LinkedIn & more</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        function goToStep1() {
+            currentStep = 1;
+            updateStepDisplay();
+        }
+
+        function goToStep2() {
+            // Validate step 1
+            const campaignType = document.getElementById('campaignType').value;
+            const campaignGoal = document.getElementById('campaignGoal').value;
+            const dailyBudget = document.getElementById('dailyBudget').value;
+            const campaignDuration = document.getElementById('campaignDuration').value;
+
+            if (!campaignType || !campaignGoal || !dailyBudget || !campaignDuration) {
+                alert('Please fill in all fields to continue');
+                return;
+            }
+
+            currentStep = 2;
+            updateStepDisplay();
+        }
+
+        function updateStepDisplay() {
+            // Hide all steps
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+
+            // Show current step
+            document.getElementById(`step${currentStep}`).classList.remove('hidden');
+            document.getElementById(`step${currentStep}`).classList.add('slide-in');
+
+            // Update indicators
+            for (let i = 1; i <= 3; i++) {
+                const indicator = document.getElementById(`step${i}-indicator`);
+                if (i <= currentStep) {
+                    indicator.className = 'w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold';
+                } else {
+                    indicator.className = 'w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-semibold';
+                }
+            }
+
+            // Update progress bars
+            for (let i = 1; i <= 2; i++) {
+                const progressBar = document.getElementById(`progress-bar-${i}`);
+                if (i < currentStep) {
+                    progressBar.className = 'w-12 h-1 bg-blue-600';
+                } else {
+                    progressBar.className = 'w-12 h-1 bg-gray-300';
+                }
+            }
+        }
+
+        function generateRescuePlan() {
+            // Validate step 2
+            const ctr = document.getElementById('ctrIssue').value;
+            const conversion = document.getElementById('conversionIssue').value;
+            const cost = document.getElementById('costIssue').value;
+            const audience = document.getElementById('audienceIssue').value;
+
+            if (!ctr || !conversion || !cost || !audience) {
+                alert('Please complete all performance metrics to generate your rescue plan');
+                return;
+            }
+
+            // Get form data
+            const campaignType = document.getElementById('campaignType').value;
+            const campaignGoal = document.getElementById('campaignGoal').value;
+            const dailyBudget = document.getElementById('dailyBudget').value;
+            const campaignDuration = document.getElementById('campaignDuration').value;
+
+            // Generate personalized rescue plan
+            const rescuePlan = generatePersonalizedPlan(campaignType, campaignGoal, ctr, conversion, cost, audience, dailyBudget, campaignDuration);
+            
+            // Display the plan
+            document.getElementById('rescuePlan').innerHTML = rescuePlan;
+            
+            currentStep = 3;
+            updateStepDisplay();
+        }
+
+        function generatePersonalizedPlan(platform, goal, ctr, conversion, cost, audience, budget, duration) {
+            const fixes = [];
+            
+            // CTR Issues
+            if (ctr === 'very-low' || ctr === 'low') {
+                if (platform === 'facebook' || platform === 'instagram') {
+                    fixes.push({
+                        priority: 'URGENT',
+                        title: 'Fix Your Creative Hook',
+                        problem: 'Your ad creative isn\'t stopping the scroll',
+                        solution: 'Replace your first 3 seconds with a pattern interrupt. Try: "Stop doing [common mistake]" or "The #1 thing [target audience] gets wrong about [topic]"',
+                        impact: 'Expected CTR increase: 150-300%'
+                    });
+                } else if (platform === 'google') {
+                    fixes.push({
+                        priority: 'URGENT',
+                        title: 'Rewrite Your Headlines',
+                        problem: 'Your headlines aren\'t compelling enough',
+                        solution: 'Include your target keyword + emotional trigger. Try: "[Keyword] - Get Results in 24 Hours" or "Why [Target Audience] Choose [Your Solution]"',
+                        impact: 'Expected CTR increase: 80-200%'
+                    });
+                }
+            }
+
+            // Conversion Issues
+            if (conversion === 'none' || conversion === 'very-low') {
+                fixes.push({
+                    priority: 'CRITICAL',
+                    title: 'Landing Page Emergency Fix',
+                    problem: 'Your landing page isn\'t converting traffic',
+                    solution: 'Add social proof above the fold, reduce form fields to 3 maximum, and add a risk-free guarantee. Match your ad headline exactly to your page headline.',
+                    impact: 'Expected conversion increase: 200-400%'
+                });
+            }
+
+            // Cost Issues
+            if (cost === 'too-high' || cost === 'high') {
+                if (platform === 'facebook' || platform === 'instagram') {
+                    fixes.push({
+                        priority: 'HIGH',
+                        title: 'Narrow Your Audience',
+                        problem: 'You\'re targeting too broad an audience',
+                        solution: 'Reduce audience size to 500K-2M people. Layer interests: [Primary Interest] + [Behavior] + [Demographic]. Test lookalike audiences of your best customers.',
+                        impact: 'Expected cost reduction: 40-70%'
+                    });
+                } else if (platform === 'google') {
+                    fixes.push({
+                        priority: 'HIGH',
+                        title: 'Add Negative Keywords',
+                        problem: 'You\'re paying for irrelevant clicks',
+                        solution: 'Add 20+ negative keywords immediately. Include: "free", "cheap", "DIY", competitor names, and job-related terms if B2C.',
+                        impact: 'Expected cost reduction: 30-60%'
+                    });
+                }
+            }
+
+            // Audience Issues
+            if (audience === 'negative' || audience === 'low') {
+                fixes.push({
+                    priority: 'MEDIUM',
+                    title: 'Message-Market Mismatch Fix',
+                    problem: 'Your message doesn\'t resonate with your audience',
+                    solution: 'Survey 10 recent customers about their biggest pain point. Rewrite your ad copy to address that exact problem using their exact words.',
+                    impact: 'Expected engagement increase: 100-250%'
+                });
+            }
+
+            // Duration-based fixes
+            if (duration === 'new') {
+                fixes.push({
+                    priority: 'MEDIUM',
+                    title: 'Give It More Time (But Watch Closely)',
+                    problem: 'Campaign needs more data to optimize',
+                    solution: 'Wait 48-72 hours before major changes, but monitor hourly. If cost per result is 3x your target after 48 hours, pause and implement other fixes.',
+                    impact: 'Prevents premature optimization'
+                });
+            }
+
+            // Budget-based fixes
+            if (budget === 'low' && (cost === 'too-high' || cost === 'high')) {
+                fixes.push({
+                    priority: 'HIGH',
+                    title: 'Micro-Budget Optimization',
+                    problem: 'Small budget requires perfect targeting',
+                    solution: 'Focus on 1 ad set, 1 creative, and your most profitable audience segment. Pause everything else until you find what works.',
+                    impact: 'Concentrates limited budget for better results'
+                });
+            }
+
+            // Ensure we have exactly 5 fixes
+            while (fixes.length < 5) {
+                fixes.push({
+                    priority: 'BONUS',
+                    title: 'Split Test Your Call-to-Action',
+                    problem: 'Your CTA might not be compelling enough',
+                    solution: 'Test these CTAs: "Get Started Free", "See How It Works", "Join [Number] Happy Customers". Use action words and create urgency.',
+                    impact: 'Expected improvement: 15-40%'
+                });
+            }
+
+            // Generate HTML for the rescue plan
+            let planHTML = '';
+            fixes.slice(0, 5).forEach((fix, index) => {
+                const priorityColor = fix.priority === 'URGENT' || fix.priority === 'CRITICAL' ? 'red' : 
+                                    fix.priority === 'HIGH' ? 'orange' : 'blue';
+                
+                planHTML += `
+                    <div class="bg-white border-l-4 border-${priorityColor}-500 p-6 rounded-lg shadow-sm">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-lg text-gray-800">Fix #${index + 1}: ${fix.title}</h3>
+                            <span class="bg-${priorityColor}-100 text-${priorityColor}-800 px-3 py-1 rounded-full text-xs font-semibold">${fix.priority}</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="font-semibold text-red-600">Problem:</span>
+                                <p class="text-gray-700 mt-1">${fix.problem}</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-green-600">Solution:</span>
+                                <p class="text-gray-700 mt-1">${fix.solution}</p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded">
+                                <span class="font-semibold text-green-800">Expected Impact:</span>
+                                <span class="text-green-700 ml-2">${fix.impact}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return planHTML;
+        }
+
+        function upgradeToPremium() {
+            // Replace this URL with your actual Stripe Payment Link
+            const stripePaymentLink = "https://buy.stripe.com/test_XXXXXXXXX"; // You'll get this from Stripe
+            
+            // For now, show instructions
+            alert(`TO SET UP STRIPE PAYMENTS:
+
+1. Go to dashboard.stripe.com
+2. Click "Payment Links" 
+3. Create new link for $47
+4. Replace the stripePaymentLink variable with your actual link
+5. Test with Stripe test mode first!
+
+Your payment link will look like:
+https://buy.stripe.com/live_XXXXXXXXX`);
+            
+            // Uncomment this when you have your Stripe link:
+            // window.open(stripePaymentLink, '_blank');
+        }
+
+        function downloadPlan() {
+            // Get the rescue plan content
+            const planContent = document.getElementById('rescuePlan').innerHTML;
+            
+            // Create a simple text version for download
+            const campaignType = document.getElementById('campaignType').value;
+            const campaignGoal = document.getElementById('campaignGoal').value;
+            
+            const textContent = `
+CAMPAIGN RESCUE PLAN (FREE VERSION)
+Generated: ${new Date().toLocaleDateString()}
+
+Campaign: ${campaignType} - ${campaignGoal}
+
+IMMEDIATE ACTION ITEMS:
+${document.querySelectorAll('#rescuePlan h3').length > 0 ? 
+    Array.from(document.querySelectorAll('#rescuePlan h3')).map((h3, i) => 
+        `${i + 1}. ${h3.textContent}`
+    ).join('\n') : 'Plan generated successfully'}
+
+IMPLEMENTATION TIPS:
+• Implement fixes one at a time to measure impact
+• Give each change 24-48 hours to show results  
+• Keep your best-performing elements unchanged
+• Document what you change for future reference
+
+Want the complete implementation guide with screenshots, 
+email templates, and advanced strategies?
+Upgrade to Premium for just $47!
+
+Generated by Campaign Rescue Tool
+            `;
+
+            // Create and download the file
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'campaign-rescue-plan-free.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function startOver() {
+            // Reset all form fields
+            document.getElementById('campaignType').value = '';
+            document.getElementById('campaignGoal').value = '';
+            document.getElementById('dailyBudget').value = '';
+            document.getElementById('campaignDuration').value = '';
+            document.getElementById('ctrIssue').value = '';
+            document.getElementById('conversionIssue').value = '';
+            document.getElementById('costIssue').value = '';
+            document.getElementById('audienceIssue').value = '';
+            
+            // Go back to step 1
+            currentStep = 1;
+            updateStepDisplay();
+        }
+
+        // Initialize the display
+        updateStepDisplay();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'971b7aa310f8f0ea',t:'MTc1NTYyNTY3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
